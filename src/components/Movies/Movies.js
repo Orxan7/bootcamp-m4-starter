@@ -1,37 +1,49 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import MovieItem from '../MovieItem/MovieItem';
+import { changeMoviesForSearch } from "../../redux/actions";
+
 import './Movies.css';
+import { useEffect } from 'react';
 
-class Movies extends Component {
-    state = { 
-        movies: [
-            {
-                imdbID: 'tt3896198',
-                title: "Guardians of the Galaxy Vol. 2",
-                year: 2017,
-                poster: "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg"
 
-            },
-            {
-                imdbID: 'tt0068646',
-                title: "The Godfather",
-                year: 1972,
-                poster: "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg"
-
-            }
-        ]
+const mapStateToProps = (state) => {
+    return {
+        search: state.searchLine,
+        movies: state.movies
     }
-    render() { 
-        return ( 
-            <ul className="movies">
-                {this.state.movies.map((movie) => (
-                    <li className="movies__item" key={movie.imdbID}>
-                        <MovieItem {...movie} />
-                    </li>
-                ))}
-            </ul>
-        );
+  };
+  
+const mapDispatchToProps = dispatch => ({
+    onChangeMoviesForSearch: (movies) => dispatch(changeMoviesForSearch(movies))
+  });
+
+
+function Movies({ onChangeMoviesForSearch , search, movies}) {
+
+    const getMovies = async ()=>{
+        let response = search? await fetch(`http://www.omdbapi.com/?s=${search}&apikey=cdd098d5`) : 1;
+        let data = search? await response.json(): [];
+        onChangeMoviesForSearch(data?.Search)
     }
+
+
+    useEffect(()=>{
+        getMovies()
+        return ()=>{
+            onChangeMoviesForSearch([])
+        }
+    }, [search])
+
+    return ( 
+        <ul className="movies">
+            { movies?.map((movie) => (
+                <li className="movies__item" key={movie.imdbID}>
+                    <MovieItem {...movie} />
+                </li>
+            ))}
+        </ul>
+    );
 }
  
-export default Movies;
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);

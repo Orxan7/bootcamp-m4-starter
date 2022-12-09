@@ -29,3 +29,11 @@
     opacity: 0.9;
     transition: all 0.2s linear;
 }
+
+.movie-item__add-button_disable {
+    background-color: #80808E;
+}
+
+.movie-item__add-button_disable:hover {
+    opacity: 1;
+}

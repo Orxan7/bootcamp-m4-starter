@@ -1,5 +1,7 @@
 .main-page__content {
+    min-width: 693px;
     padding: 42px calc(50% - 500px);
+    gap: 25px;
     display: flex;
     justify-content: space-between;
 }
@@ -12,8 +14,10 @@
 
 .main-page__search-box {
     margin-bottom: 35px;
+    
 }
 
 .main-page__favorites {
     width: 35%;   
+    margin-right: 25px;
 }
