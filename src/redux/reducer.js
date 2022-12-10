@@ -47,6 +47,23 @@ export default function reducer(state=initialState, action) {
                 ...state,
                 searchLine: action.payload.search
             }
+        case "CHANGE_TITLE_OF_FAVORITE":
+            return {
+                ...state,
+                favorite: [{
+                    ...state.favorite[0],
+                    title: action.payload.title
+              }]
+            }
+        case "CLEAR_FAVORITES":
+            return {
+                ...state,
+                favorite: [{
+                    ...state.favorite[0],
+                    movies: [],
+                    title: ""
+              }]
+            }
         default:
           return state;
     }

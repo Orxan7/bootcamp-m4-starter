@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
   
 const mapDispatchToProps = dispatch => ({
     onChangeMoviesForSearch: (movies) => dispatch(changeMoviesForSearch(movies))
-  });
+});
 
 
 function Movies({ onChangeMoviesForSearch , search, movies}) {
@@ -30,9 +30,6 @@ function Movies({ onChangeMoviesForSearch , search, movies}) {
 
     useEffect(()=>{
         getMovies()
-        return ()=>{
-            onChangeMoviesForSearch([])
-        }
     }, [search])
 
     return ( 

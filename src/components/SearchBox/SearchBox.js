@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { changeSearchLine } from '../../redux/actions';
@@ -28,7 +29,11 @@ function SearchBox({ onChangeSearchline }) {
         e.preventDefault();
         onChangeSearchline(searchLine);
     }
-        
+    
+    useEffect(()=>{
+        onChangeSearchline('')
+    })
+
     return (
         <div className="search-box">
             <form className="search-box__form" onSubmit={searchBoxSubmitHandler}>

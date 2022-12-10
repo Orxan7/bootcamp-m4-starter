@@ -1,57 +1,40 @@
-import React, { Component } from 'react';
-import { connect } from "react-redux";
-import { addMovieToFavorite, deleteMovieFromFavorite } from "../../redux/actions";
+import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import FavoriteItem from '../../components/ListPageComponents/FavoriteItem';
 
 import './ListPage.css';
 
+function ListPage () {
 
-const mapStateToProps = (state) => {
-    return {
-        movies: state.movies,
-        favorite: state.favorite
-    }
-  };
+    const location = useLocation()
+    const { id } = location.state
+    const [data, setData] = useState([])
 
-
-const mapDispatchToProps = dispatch => ({
-    onGoodAddToCart: (id) => dispatch(addMovieToFavorite(id)),
-    onGoodDeleteFromCart: (index) => dispatch(deleteMovieFromFavorite(index))
-});
-
-class ListPage extends Component {
-
-    state = {
-        movies: [
-            { title: 'The Godfather', year: 1972, imdbID: 'tt0068646' }
-        ]
+    const getData = async (id)=>{
+        const response = await fetch(`https://acb-api.algoritmika.org/api/movies/list/${id}`)
+        const data = await response.json()
+        setData(data)
     }
 
-    componentDidMount() {
-        const { movies } = this.props;
-        console.log(movies);
-        // TODO: запрос к сервер на получение списка
-        // TODO: запросы к серверу по всем imdbID
-    }
-    
-    render() { 
-        const { movies } = this.props;
-        console.log(movies)
+    useEffect(()=>{
+        getData(id)
+    },[id])
 
-        return (
-            <div className="list-page">
-                <h1 className="list-page__title">Мой список</h1>
-                <ul>
-                    {this.state.movies.map((item) => {
-                        return (
-                            <li key={item.imdbID}>
-                                <a href="https://www.imdb.com/title/tt0068646/" target="_blank">{item.title} ({item.year})</a>
-                            </li>
-                        );
-                    })}
-                </ul>
-            </div>
-        );
-    }
+
+    return (
+        <div className="list-page">
+            <h1 className="list-page__title">{data.title}</h1>
+            <ul>
+                {data.movies?.map((item) => {
+                    return (
+                        <FavoriteItem item={item} key={item}/>
+                    );
+                })}
+            </ul>
+        </div>
+    );
 }
  
-export default connect(mapStateToProps, mapDispatchToProps)(ListPage);
+export default ListPage;

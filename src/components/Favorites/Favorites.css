@@ -42,3 +42,16 @@
 .favorites__list-item-delete-button {
     cursor: pointer;
 }
+
+.favorites__save a {
+    text-decoration: none;
+    color: white;
+}
+
+.favorites__save-empty {
+    background-color: #d3d3d3;
+}
+
+.favorites__save-empty:hover {
+    cursor: not-allowed;
+}

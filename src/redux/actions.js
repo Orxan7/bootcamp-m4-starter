@@ -33,3 +33,23 @@ export function changeSearchLine(text) {
     }
   }
 }
+
+
+export function changeTitleOfFavorite(text) {
+  return {
+    type: 'CHANGE_TITLE_OF_FAVORITE',
+    payload: {
+      title: text
+    }
+  }
+}
+
+export function clearFavorites(text) {
+  return {
+    type: 'CLEAR_FAVORITES',
+    payload: {
+      title: text
+    }
+  }
+}
+
