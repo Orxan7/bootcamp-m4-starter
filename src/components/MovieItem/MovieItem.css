@@ -36,4 +36,5 @@
 
 .movie-item__add-button_disable:hover {
     opacity: 1;
+    cursor: not-allowed;
 }

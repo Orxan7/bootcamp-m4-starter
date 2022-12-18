@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+
 
 function FavoriteItem({ item }){
 
@@ -13,11 +13,11 @@ function FavoriteItem({ item }){
 
     useEffect(()=>{
         getMovie()
-    }, [])
+    },[])
 
     return (
         <li key={item}>
-            <a href={`https://www.imdb.com/title/${item}/`} target="_blank">{movie.Title} ({movie.Year})</a>
+            <a href={`https://www.imdb.com/title/${item}/`}>{movie.Title ? movie.Title +" ("+movie.Year+")":"Load..."}</a>
         </li>
     );
 }

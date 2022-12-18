@@ -1,26 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import FavoriteItem from '../../components/ListPageComponents/FavoriteItem';
 
 import './ListPage.css';
 
 function ListPage () {
 
-    const location = useLocation()
-    const { id } = location.state
+    const { id } = useParams()
     const [data, setData] = useState([])
 
-    const getData = async (id)=>{
+    const getData = async ()=>{
         const response = await fetch(`https://acb-api.algoritmika.org/api/movies/list/${id}`)
-        const data = await response.json()
-        setData(data)
+        const data_new = await response.json()
+        setData(data_new)
     }
 
     useEffect(()=>{
-        getData(id)
-    },[id])
+        getData()
+    }, [id])
 
 
     return (
